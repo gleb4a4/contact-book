@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    ModalVisible: false,
     users: [
       {
         id: 1,
@@ -22,15 +23,27 @@ export default new Vuex.Store({
         Phone: "",
         City: ""
       }
-
     ]
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    Change_Modal: state => {
+      state.ModalVisible = !state.ModalVisible;
+    }
+  },
+  actions: {
+    Toggle_Modal: ({ commit }) => {
+      commit("Change_Modal");
+    }
+  },
   getters: {
+    /**
+     * @return {boolean}
+     */
+    Modal_State(state) {
+      return state.ModalVisible;
+    },
     Users(state) {
       return state.users;
     }
-  },
-  modules: {}
+  }
 });
