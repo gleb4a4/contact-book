@@ -44,6 +44,8 @@ export default new Vuex.Store({
     },
     Users(state) {
       return state.users;
-    }
+    },
+
+
   }
 });

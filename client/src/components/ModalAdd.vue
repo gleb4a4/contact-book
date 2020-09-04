@@ -4,16 +4,36 @@
       <div class="row">
         <div class="Header">
           <h1>Добавление Контакта</h1>
-           <div>
-             <input type="text" placeholder="FirstName">
-             <input type="text" placeholder="LastName">
-           </div>
+          <div>
+            <input
+              v-model="FirstName"
+              type="text"
+              class="FirstName"
+              name="FirstName"
+              placeholder="FirstName"
+              required
+            />
+            <input
+              v-model="LastName"
+              type="text"
+              class="LastName"
+              name="LastName"
+              placeholder="LastName"
+              required
+            />
+          </div>
           <div class="footer">
             <div class="botbutom">
               <button type="submit" class="btn-exit" @click="Toggle_Modal">
                 Cancel
               </button>
-              <button type="submit" class="btn-send">Add</button>
+              <button
+                type="submit"
+                class="btn-send"
+                @click="Users.push({ FirstName, LastName })"
+              >
+                Add
+              </button>
             </div>
           </div>
         </div>
@@ -23,16 +43,24 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "ModalAdd",
+  data() {
+    return {
+      FirstName: "",
+      LastName: ""
+    };
+  },
+  computed: {
+    ...mapGetters(["Users"])
+  },
 
   methods: {
-    ...mapActions(["Toggle_Modal"]),
-    CloseModal() {
-      this.Toggle_Modal();
-    }
-  }
+    ...mapActions(["Toggle_Modal"])
+  },
+
+
 };
 </script>
 
@@ -70,6 +98,7 @@ export default {
   outline: none;
   border-radius: 40px;
   float: left;
+  cursor: pointer;
 }
 .btn-send {
   font-size: 18px;
@@ -81,6 +110,7 @@ export default {
   outline: none;
   border-radius: 40px;
   float: right;
+  cursor: pointer;
 }
 .col label {
   font-size: 0.8vw;

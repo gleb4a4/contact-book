@@ -1,12 +1,13 @@
 <template>
-  <div>
-
-  </div>
+  <div></div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
-  name: "Contact_Add"
+  name: "ContactDetails",
+
+
 };
 </script>
 

@@ -1,31 +1,24 @@
 <template>
   <div id="app">
-
     <div id="nav">
       <router-link to="/">Contact list</router-link> |
       <router-link to="/Contact_Inf">Contact_Inf</router-link>
     </div>
-
     <router-view />
-    <ModalAdd style="z-index: 2" v-if="Modal_State" />
+    <ModalAdd v-if="Modal_State"></ModalAdd>
   </div>
 </template>
 <script>
 // @ is an alias to /src
-import ModalAdd from "./components/ModalAdd.vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
+import ModalAdd from "./components/ModalAdd";
 export default {
   name: "App",
   components: { ModalAdd },
   computed: {
-    ...mapGetters(["Users", "Change_Modal", "Modal_State"])
+    ...mapGetters(["Modal_State"])
   },
-  methods: {
-    ...mapActions(["Toggle_Modal"]),
-    DeletedContact(user) {
-      this.Users.splice(this.Users.indexOf(user), 1);
-    }
-  }
+
 };
 </script>
 <style>
@@ -36,16 +29,13 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
 #nav {
   padding: 30px;
 }
-
 #nav a {
   font-weight: bold;
   color: #2c3e50;
 }
-
 #nav a.router-link-exact-active {
   color: #42b983;
 }

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Contact_List from "../views/Contact_List.vue";
+import Contact_Inf from "../views/Contact_Inf";
 
 Vue.use(VueRouter);
 
@@ -11,13 +12,10 @@ const routes = [
     component: Contact_List
   },
   {
-    path: "/Contact_Inf",
+    path: "/Contact_Inf/:UserId",
     name: "Contact_Inf",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Contact_Inf.vue")
+    component: Contact_Inf,
+    props: true
   }
 ];
 
