@@ -12,7 +12,7 @@ const routes = [
     component: Contact_List
   },
   {
-    path: "/Contact_Inf/:UserId",
+    path: "/Contact_Inf",
     name: "Contact_Inf",
     component: Contact_Inf,
     props: true

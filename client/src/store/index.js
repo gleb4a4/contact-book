@@ -10,18 +10,12 @@ export default new Vuex.Store({
       {
         id: 1,
         FirstName: "Santa",
-        LastName: "Mario",
-        Age: "",
-        Phone: "",
-        City: ""
+        LastName: "Mario"
       },
       {
         id: 2,
         FirstName: "Olehandro",
-        LastName: "Gomez",
-        Age: "",
-        Phone: "",
-        City: ""
+        LastName: "Gomez"
       }
     ]
   },
@@ -33,7 +27,8 @@ export default new Vuex.Store({
   actions: {
     Toggle_Modal: ({ commit }) => {
       commit("Change_Modal");
-    }
+    },
+
   },
   getters: {
     /**

@@ -2,17 +2,20 @@
   <div class="Main">
     <ul class="List">
       <li v-for="(user, index) in this.Users" :key="index" class="ContactList">
-        {{ user.FirstName }} {{ user.LastName }}
-        <button
-          @click="goTodetail(index)"
-          name="More"
-          class="More"
-        >
-          <i class="fa fa-angle-right"></i>
-        </button>
-        <button class="Deleted" @click="deleteUser(user)">
-          <i class="fa fa-trash"></i>
-        </button>
+        <div class="NameContact">{{ user.FirstName }} {{ user.LastName }}</div>
+        <div class="Icons">
+          <button
+            @focus="Toggle_Modal"
+            @click="goToDetail(index)"
+            name="More"
+            class="More"
+          >
+            <i class="fa fa-angle-right"></i>
+          </button>
+          <button class="Deleted" @click="deleteUser(user)">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
       </li>
       <button class="Add" name="Add" @click="Toggle_Modal">
         <i class="fa fa-plus-square"></i>
@@ -23,21 +26,24 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-
 export default {
   name: "ContactTodo",
   computed: {
-    ...mapGetters(["Users"])
+    ...mapGetters(["Users", "Modal_State"])
   },
   methods: {
     ...mapActions(["Toggle_Modal"]),
     deleteUser(user) {
       const userIndex = this.Users.indexOf(user);
-      this.Users.splice(userIndex, 1);
+      const ConfirmDeletion = confirm(
+        "Вы действительно хотите удалить пользователя: " +
+          `${user.FirstName} ` +
+          `${user.LastName}`
+      );
+      if (ConfirmDeletion) this.Users.splice(userIndex, 1);
     },
-    goTodetail(index) {
-      //const userIndex = this.Users.indexOf(user);
-      this.$router.push({name:'Contact_Inf' , params:{UserId:index}})
+    goToDetail(index) {
+      this.$router.push({ name: "Contact_Inf", params: { UserId: index } });
     }
   }
 };
@@ -45,43 +51,64 @@ export default {
 
 <style scoped>
 * {
-  padding: 0;
   transition: all 0.3s;
+}
+ul {
+  padding: 0 !important;
 }
 .Main {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  height: max-content;
-  width: 50%;
-  margin: 0 auto;
-  border: 10px solid transparent;
-  border-image: linear-gradient(to bottom, transparent 0%, #adf2f7 100%);
-  border-image-slice: 1;
+  align-items: center;
+  width: 100%;
 }
 .List {
-  margin-left: 0;
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
   list-style: none;
+  border: 3px solid black;
+  padding: 3% !important;
 }
 .List li {
-  width: 100%;
-  text-align: left;
-  margin-bottom: 1em;
+  text-align: left !important;
   border: 3px solid #cadfcf;
-  padding: 0.6em;
   border-radius: 8px;
   background: #fefefe;
   color: #231f20;
   font-family: "Trebuchet MS", "Lucida Sans", serif;
+  margin: 2%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
+.NameContact {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding-left: 5px;
+  align-items: center;
+}
+.Icons {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .ContactList button {
-  padding: 1px;
-  margin: 1px;
 }
 .Add {
   background-color: transparent;
   border: none;
   color: green;
-  padding: 4px;
   text-align: center;
   display: inline-block;
   font-size: 26px;
@@ -108,5 +135,20 @@ export default {
   border: 1px solid black;
   border-radius: 24px;
   transition-duration: unset;
+}
+@media (max-width: 766px) {
+  .List {
+    width: 100%;
+  }
+}
+@media (max-width: 992px) and (min-width: 767px) {
+  .List {
+    width: 75%;
+  }
+}
+@media (max-width: 1200px) and (min-width: 993px) {
+  .List {
+    width: 75%;
+  }
 }
 </style>

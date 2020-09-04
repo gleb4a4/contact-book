@@ -17,8 +17,7 @@ export default {
   components: { ModalAdd },
   computed: {
     ...mapGetters(["Modal_State"])
-  },
-
+  }
 };
 </script>
 <style>
