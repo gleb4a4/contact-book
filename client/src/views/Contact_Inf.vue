@@ -4,16 +4,16 @@
       <div class="col" v-for="(user, index) in Users" :key="index">
         <div v-if="UserId === index" class="line">
           <div class="row">
-            <div class="left"><h3>FirstName:</h3></div>
-            <div class="right">
-              <h2>{{ user.FirstName }}</h2>
-            </div>
-          </div>
-          <div class="row">
-            <div class="left"><h3>LastName:</h3></div>
-            <div class="right">
-              <h2 >{{ user.LastName }}</h2>
-            </div>
+            <ul class="row" v-for="(userInfo, title) in user" :key="title">
+              <li class="left">
+                {{ title }} : {{ userInfo }}
+                <div class="Icons">
+                  <button class="Deleted" @click="DeletedTitle(user, title)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -22,19 +22,27 @@
 </template>
 
 <script>
+
 import { mapGetters } from "vuex";
+
 export default {
   name: "Contact_Inf",
   data() {
     return {
       UserId: this.$route.params.UserId,
-      EditingUsers:{}
+      EditingUsers: {}
     };
   },
   computed: {
     ...mapGetters(["Users"])
   },
-  methods:{},
+  methods: {
+    DeletedTitle(user, title) {
+      const ConfirmToDeleteTitle = confirm("Вы действительно хотите удалить? ");
+      if (ConfirmToDeleteTitle) delete user[title];
+     this.$forceUpdate()
+    }
+  },
 
 };
 </script>
@@ -53,12 +61,11 @@ export default {
   justify-content: center;
   align-items: center;
   border: 2px black solid;
-
 }
 .row {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 }
@@ -66,17 +73,23 @@ export default {
   width: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  text-transform: uppercase;
 }
-.right {
-  width: 45%;
+.Icons {
+  width: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
-  font-size: 14px;
+}
+.Deleted {
+  background-color: transparent;
+  border: none;
+  color: black;
+  padding: 10px;
+  font-size: 18px;
+  cursor: pointer;
 }
 h2 {
   padding-left: 2%;

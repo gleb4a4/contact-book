@@ -8,12 +8,10 @@ export default new Vuex.Store({
     ModalVisible: false,
     users: [
       {
-        id: 1,
         FirstName: "Santa",
         LastName: "Mario"
       },
       {
-        id: 2,
         FirstName: "Olehandro",
         LastName: "Gomez"
       }
