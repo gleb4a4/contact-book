@@ -6,6 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     ModalVisible: false,
+    ModalOnInf: false,
     users: [
       {
         FirstName: "Santa",
@@ -20,13 +21,18 @@ export default new Vuex.Store({
   mutations: {
     Change_Modal: state => {
       state.ModalVisible = !state.ModalVisible;
+    },
+    Change_ModalInf: state => {
+      state.ModalOnInf = !state.ModalOnInf;
     }
   },
   actions: {
     Toggle_Modal: ({ commit }) => {
       commit("Change_Modal");
     },
-
+    Toggle_ModalInf: ({ commit }) => {
+      commit("Change_ModalInf");
+    }
   },
   getters: {
     /**
@@ -38,7 +44,11 @@ export default new Vuex.Store({
     Users(state) {
       return state.users;
     },
-
-
+    /**
+     * @return {boolean}
+     */
+    ModalOn(state) {
+      return state.ModalOnInf;
+    }
   }
 });

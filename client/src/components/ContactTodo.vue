@@ -5,7 +5,6 @@
         <div class="NameContact">{{ user.FirstName }} {{ user.LastName }}</div>
         <div class="Icons">
           <button
-            @focus="Toggle_Modal"
             @click="goToDetail(index)"
             name="More"
             class="More"

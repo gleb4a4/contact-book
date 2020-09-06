@@ -1,40 +1,45 @@
 <template>
-  <div>
-    <div class="modal">
-      <div class="row">
-        <div class="Header">
-          <div class="label"><h1>Добавление Контакта</h1></div>
+  <div class="modal-mask">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+        <div class="modal-x">
+          <button class="modal-default-buttonx" @click="Toggle_Modal">
+            ✖️
+          </button>
+        </div>
+        <h3>Добавить контакт</h3>
+        <div class="modal-header">
+          <h3>Имя</h3>
+          <input
+            v-model="FirstName"
+            type="text"
+            placeholder="FirstName"
+            class="modal_inp"
+            required
+          />
+        </div>
 
-          <div class="inp_ut">
-            <input
-              v-model="FirstName"
-              type="text"
-              name="FirstName"
-              placeholder="FirstName"
-              required
-            />
-            <input
-              v-model="LastName"
-              type="text"
-              name="LastName"
-              placeholder="LastName"
-              required
-            />
-          </div>
-          <div class="footer">
-            <div class="botbutom">
-              <button type="submit" class="btn-exit" @click="Toggle_Modal">
-                Cancel
-              </button>
-              <button
-                type="submit"
-                class="btn-send"
-                @click="Users.push({ FirstName, LastName })"
-              >
-                Add
-              </button>
-            </div>
-          </div>
+        <div class="modal-body">
+          <h3>Фамилия</h3>
+          <input
+            v-model="LastName"
+            type="text"
+            placeholder="LastName"
+            class="modal_inp"
+            required
+          />
+        </div>
+
+        <div class="modal-footer">
+          <slot name="footer">
+            <button
+              type="submit"
+              class="modal-default-button"
+              @click="AddUsers(FirstName, LastName)"
+            >
+              Добавить
+            </button>
+          </slot>
         </div>
       </div>
     </div>
@@ -52,111 +57,135 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["Users"])
+    ...mapGetters(["Users", "ModalOnInf"])
   },
 
   methods: {
-    ...mapActions(["Toggle_Modal"])
+    ...mapActions(["Toggle_Modal"]),
+    AddUsers(FirstName, LastName) {
+      this.Users.push({ FirstName, LastName });
+    }
   }
 };
 </script>
 
 <style scoped>
-.modal {
-  z-index: 1096;
-}
-
-.row {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.Header {
-  padding: 2%;
-  border: 1px black solid;
-}
-.inp_ut {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 input {
   margin: 5px;
   border: 1px black solid;
   font-size: 20px;
   border-radius: 5px;
 }
-.label {
-  font-size: 12px;
-  color: black;
-  border: 2px black solid;
+.modal-mask {
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: table;
+  transition: opacity 0.3s ease;
 }
-.botbutom {
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.modal-container {
+  width: 350px;
+  margin: 0px auto;
+  padding: 0 30px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  transition: all 0.3s ease;
+  font-family: Helvetica, Arial, sans-serif;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.btn-exit {
-  background-color: black;
-  color: white;
+.modal-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+::-webkit-input-placeholder {
+  font-size: 13px;
+}
+.modal-x {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.modal-default-buttonx {
+  width: 2em;
+  height: 2em;
+  font-size: 22px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
   cursor: pointer;
-  border: 0px;
-  width: 50%;
-  font-size: 24px;
-  border-radius: 5px;
-  margin: 3px;
 }
-.btn-send {
-  background-color: black;
+.modal-default-buttonx:active {
+  border: none;
+  outline: none;
+}
+.modal-default-buttonx:after {
+  border: none;
+  outline: none;
+}
+.modal-default-buttonx:focus {
+  border: none;
+  outline: none;
+}
+.modal-body {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 20px 0;
+}
+.modal_inp {
+  height: 30px;
+  margin: 2%;
+}
+.modal-footer {
+  display: flex;
+  justify-content: center;
+}
+.modal-default-button {
+  margin: 10%;
+  padding: 5%;
+  font-size: 18px;
+  background-color: #e68325;
   color: white;
+  border: 0;
+  border-radius: 2px;
   cursor: pointer;
-  border: 0px;
-  width: 50%;
-  font-size: 24px;
-  border-radius: 5px;
-  margin: 3px;
 }
-@media (max-width: 766px) {
-  .botbutom {
-    flex-direction: column;
-  }
-  .inp_ut {
-    flex-direction: column;
-  }
-  .Header {
-    border: 0;
-  }
-  .label {
-    border: 0;
-  }
+.modal-default-button:hover {
+  background-color: orange;
 }
-@media (max-width: 992px) and (min-width: 767px) {
-  .botbutom {
-    flex-direction: column;
-  }
-  .inp_ut {
-    flex-direction: column;
-  }
-  .Header {
-    border: 0;
-  }
-  .label {
-    border: 0;
-  }
+
+.modal-enter {
+  opacity: 0;
 }
-@media (max-width: 1200px) and (min-width: 993px) {
-  .inp_ut {
-    flex-direction: column;
-  }
-  .Header {
-    border: 0;
-  }
-  .label {
-    border: 0;
-  }
+
+.modal-leave-active {
+  opacity: 0;
+}
+
+.modal-enter .modal-container,
+.modal-leave-active .modal-container {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 </style>

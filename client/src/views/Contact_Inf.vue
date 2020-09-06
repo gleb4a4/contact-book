@@ -8,42 +8,51 @@
               <li class="left">
                 {{ title }} : {{ userInfo }}
                 <div class="Icons">
-                  <button class="Deleted" @click="DeletedTitle(user, title)">
+                  <button
+                    class="Deleted"
+                    @click="DeletedTitle(user, title)"
+                  >
                     <i class="fa fa-trash"></i>
                   </button>
                 </div>
               </li>
             </ul>
+            <button class="Add" name="Add" @click="Toggle_ModalInf">
+              <i class="fa fa-plus-square"></i>
+            </button>
           </div>
         </div>
       </div>
     </div>
+    <modal-add-title v-if="ModalOn"></modal-add-title>
   </div>
 </template>
 
 <script>
-
-import { mapGetters } from "vuex";
-
+import { mapGetters, mapActions } from "vuex";
+import ModalAddTitle from "../components/ModalAddTitle";
 export default {
   name: "Contact_Inf",
+  components: {
+    ModalAddTitle
+  },
   data() {
     return {
-      UserId: this.$route.params.UserId,
-      EditingUsers: {}
+      UserId: this.$route.params.UserId
     };
   },
   computed: {
-    ...mapGetters(["Users"])
+    ...mapGetters(["Users", "ModalOn"])
   },
+
   methods: {
+    ...mapActions(["Toggle_ModalInf"]),
     DeletedTitle(user, title) {
       const ConfirmToDeleteTitle = confirm("Вы действительно хотите удалить? ");
       if (ConfirmToDeleteTitle) delete user[title];
-     this.$forceUpdate()
+      this.$forceUpdate();
     }
-  },
-
+  }
 };
 </script>
 
@@ -89,6 +98,15 @@ export default {
   color: black;
   padding: 10px;
   font-size: 18px;
+  cursor: pointer;
+}
+.Add {
+  background-color: transparent;
+  border: none;
+  color: green;
+  text-align: center;
+  display: inline-block;
+  font-size: 26px;
   cursor: pointer;
 }
 h2 {
