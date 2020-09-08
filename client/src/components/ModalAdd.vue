@@ -1,8 +1,10 @@
 <template>
+  <!--  Модальное окно для добавление юзеров к контактную книгу-->
   <div class="modal-mask">
     <div class="modal-wrapper">
       <div class="modal-container">
         <div class="modal-x">
+          <!--   Кнопка закрыть модальное окно-->
           <button class="modal-default-buttonx" @click="Toggle_Modal">
             ✖️
           </button>
@@ -10,8 +12,9 @@
         <h3>Добавить контакт</h3>
         <div class="modal-header">
           <h3>Имя</h3>
+          <!-- Инпут для добавление Имени контакта-->
           <input
-            v-model="FirstName"
+            v-model.trim="FirstName"
             type="text"
             placeholder="FirstName"
             class="modal_inp"
@@ -21,8 +24,9 @@
 
         <div class="modal-body">
           <h3>Фамилия</h3>
+          <!-- Инпут для добавление Фамилии контакта-->
           <input
-            v-model="LastName"
+            v-model.trim="LastName"
             type="text"
             placeholder="LastName"
             class="modal_inp"
@@ -32,6 +36,7 @@
 
         <div class="modal-footer">
           <slot name="footer">
+            <!-- Кнопка для добавление контакта-->
             <button
               type="submit"
               class="modal-default-button"
@@ -52,18 +57,21 @@ export default {
   name: "ModalAdd",
   data() {
     return {
+      //записываем в них из инпутов информацию
       FirstName: "",
       LastName: ""
     };
   },
   computed: {
-    ...mapGetters(["Users", "ModalOnInf"])
+    ...mapGetters(["Users"]) //импорт массива
   },
 
   methods: {
     ...mapActions(["Toggle_Modal"]),
     AddUsers(FirstName, LastName) {
+      //добавления контакта в массив
       this.Users.push({ FirstName, LastName });
+      this.$store.state.ModalVisible = false;
     }
   }
 };
@@ -174,15 +182,6 @@ input {
 .modal-default-button:hover {
   background-color: orange;
 }
-
-.modal-enter {
-  opacity: 0;
-}
-
-.modal-leave-active {
-  opacity: 0;
-}
-
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);

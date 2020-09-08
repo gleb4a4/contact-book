@@ -4,7 +4,7 @@
       <div class="Header">
         <h2>Количество контактов: {{ this.Users.length }}</h2>
       </div>
-      <contact-todo ></contact-todo>
+      <contact-todo></contact-todo>
     </div>
   </div>
 </template>

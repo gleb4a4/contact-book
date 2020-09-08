@@ -1,14 +1,12 @@
 <template>
   <div class="Main">
     <ul class="List">
-      <li v-for="(user, index) in this.Users" :key="index" class="ContactList">
+      <!-- Создание списка контактов -->
+      <li v-for="(user, index) in Users" :key="index" class="ContactList">
         <div class="NameContact">{{ user.FirstName }} {{ user.LastName }}</div>
+        <!--  Иконки удаление и подробной информации    -->
         <div class="Icons">
-          <button
-            @click="goToDetail(index)"
-            name="More"
-            class="More"
-          >
+          <button @click="goToDetail(index)" name="More" class="More">
             <i class="fa fa-angle-right"></i>
           </button>
           <button class="Deleted" @click="deleteUser(user)">
@@ -16,6 +14,7 @@
           </button>
         </div>
       </li>
+      <!-- Добавление нового контакта-->
       <button class="Add" name="Add" @click="Toggle_Modal">
         <i class="fa fa-plus-square"></i>
       </button>
@@ -28,11 +27,12 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   name: "ContactTodo",
   computed: {
-    ...mapGetters(["Users", "Modal_State"])
+    ...mapGetters(["Users", "Modal_State"]) // импорт массива и состояния модульного окна
   },
   methods: {
-    ...mapActions(["Toggle_Modal"]),
+    ...mapActions(["Toggle_Modal"]), // событие изменения состояния модульного окна
     deleteUser(user) {
+      // функция удаление юзера с подтверждением
       const userIndex = this.Users.indexOf(user);
       const ConfirmDeletion = confirm(
         "Вы действительно хотите удалить пользователя: " +
@@ -42,6 +42,7 @@ export default {
       if (ConfirmDeletion) this.Users.splice(userIndex, 1);
     },
     goToDetail(index) {
+      // переход к подробной информации о контакте с передачей индекса массива
       this.$router.push({ name: "Contact_Inf", params: { UserId: index } });
     }
   }
